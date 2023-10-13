@@ -63,20 +63,11 @@ public class AppServer {
                 } catch (Exception e) {
                     
                     System.out.println("[SERVER] ### Non un numero");
-                    server.send("ERROR\n");
-                    continue;
-                }
-
-                if(fileSelected >= files.list().length || fileSelected < 0) {
-
-                    System.out.println("[SERVER] ### Numero non disponibile");
-                    server.send("ERROR\n");
                     continue;
                 }
 
                 System.out.println("[Client #" + server.clientID + "] Selezionato file id: " + inputString + " e nome: " + files.list()[fileSelected]);
 
-                server.send("SUCCESS\n");
                 server.send(files.list()[fileSelected] + '\n');
                 server.send(files.listFiles()[fileSelected]);
                 break;

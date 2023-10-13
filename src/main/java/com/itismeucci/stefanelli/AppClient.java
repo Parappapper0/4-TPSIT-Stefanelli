@@ -33,31 +33,24 @@ public class AppClient {
 
         client.send("Connessione riuscita con il Client #" + clientID + "\n");
 
-        while(true) {
-        
+        System.out.println(client.receive());
+
+        int fileAmount = Integer.parseInt(client.receive());
+
+        for (int i = 0; i < fileAmount; i++)
             System.out.println(client.receive());
 
-            int fileAmount = Integer.parseInt(client.receive());
+        int fileID;
+        scanner.nextLine();
+        while (true) {
+            try{fileID = Integer.parseInt(scanner.nextLine()); }catch(Exception e) { System.out.println("Not a number"); continue;}
 
-            for(int i = 0; i < fileAmount; i++) {
+            if (fileID < 0 || fileID >= fileAmount) { System.out.println("Not a valid number"); continue;}
 
-                System.out.println(client.receive());
-            }
-
-            int fileID;
-            scanner.nextLine();
-            while(true) {
-                try{fileID = Integer.parseInt(scanner.nextLine()); }catch(Exception e) { System.out.println("Not a number"); continue;}
-                break;
-            }
-
-            client.send(String.valueOf(fileID) + '\n');
-
-            if (client.receive() == "ERROR")
-                continue;
-            else
-                break;
+            break;
         }
+
+        client.send(String.valueOf(fileID) + '\n');
 
         String filename = client.receive();
         File download = new File(filename);
